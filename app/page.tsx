@@ -1,5 +1,6 @@
 import Nav from "@/components/Nav";
 import HeroSection from "@/sections/HeroSection";
+import WorkflowSection from "@/sections/WorkflowSection";
 import FeaturesSection from "@/sections/FeaturesSection";
 import AdvantageSection from "@/sections/AdvantageSection";
 import MetricsSection from "@/sections/MetricsSection";
@@ -11,6 +12,7 @@ export default function Home() {
     <>
       <Nav />
       <HeroSection />
+      <WorkflowSection />
       <FeaturesSection />
       <AdvantageSection />
       <MetricsSection />

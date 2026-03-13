@@ -19,11 +19,11 @@ const projectLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-const socials = [
-  { icon: Twitter, href: "https://twitter.com/", label: "Twitter" },
-  { icon: Linkedin, href: "https://linkedin.com/", label: "LinkedIn" },
-  { icon: Instagram, href: "https://instagram.com/", label: "Instagram" },
-];
+// const socials = [
+//   { icon: Twitter, href: "https://twitter.com/", label: "Twitter" },
+//   { icon: Linkedin, href: "https://linkedin.com/", label: "LinkedIn" },
+//   { icon: Instagram, href: "https://instagram.com/", label: "Instagram" },
+// ];
 
 export default function Footer() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -129,11 +129,11 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-[#1A1A1A]">
-        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-6">
+        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-center gap-4 px-6 py-6">
           <p className="text-xs text-gray-500">
             &copy; 2026 SnipShot. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             {socials.map((s) => (
               <motion.a
                 key={s.label}
@@ -148,7 +148,7 @@ export default function Footer() {
                 <s.icon className="h-5 w-5" />
               </motion.a>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
