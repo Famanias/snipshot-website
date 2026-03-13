@@ -1,14 +1,6 @@
-"use client";
+﻿"use client";
 
-import {
-  motion,
-  type MotionValue,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import {
   heroWord,
@@ -17,54 +9,32 @@ import {
   buttonHover,
   buttonTap,
 } from "@/components/motion/variants";
-import { useEffect, useRef, useState } from "react";
 
 const headlineWords = ["Snip.", "Extract.", "Translate."];
 
-interface ScissorLayerProps {
+interface StaticScissorProps {
   id: string;
-  scrollYProgress: MotionValue<number>;
-  shouldReduceMotion: boolean;
   left: string;
   top: string;
   width: string;
   opacity: number;
   strokeWidth: number;
   blur?: string;
-  fromY: number;
-  toY: number;
-  fromRotate: number;
-  toRotate: number;
-  baseScale: number;
   flip?: boolean;
 }
 
-function ScissorLayer({
+function StaticScissor({
   id,
-  scrollYProgress,
-  shouldReduceMotion,
   left,
   top,
   width,
   opacity,
   strokeWidth,
   blur,
-  fromY,
-  toY,
-  fromRotate,
-  toRotate,
-  baseScale,
   flip = false,
-}: ScissorLayerProps) {
-  const layerY = useTransform(scrollYProgress, [0, 1], [fromY, toY]);
-  const layerRotate = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [fromRotate, toRotate],
-  );
-
+}: StaticScissorProps) {
   return (
-    <motion.div
+    <div
       className="absolute aspect-square"
       style={{
         left,
@@ -72,19 +42,7 @@ function ScissorLayer({
         width,
         opacity,
         filter: blur ? `blur(${blur})` : undefined,
-        y: shouldReduceMotion ? fromY : layerY,
-        rotate: shouldReduceMotion ? fromRotate : layerRotate,
       }}
-      initial={{ opacity: 0, scale: baseScale * 0.94 }}
-      animate={
-        shouldReduceMotion
-          ? { opacity, scale: baseScale }
-          : {
-              opacity: [opacity * 0.7, opacity, opacity * 0.78],
-              scale: [baseScale, baseScale * 1.02, baseScale],
-            }
-      }
-      transition={{ duration: 14, delay: 0.2, repeat: Infinity, ease: "easeInOut" }}
     >
       <div
         className="h-full w-full"
@@ -133,181 +91,136 @@ function ScissorLayer({
           </g>
         </svg>
       </div>
-    </motion.div>
+    </div>
+  );
+}
+
+function StaticOcrBackdrop() {
+  return (
+    <div className="absolute right-[7%] top-[20%] hidden w-[18rem] rounded-2xl border border-cyan/20 bg-black/35 p-3 backdrop-blur-sm lg:block">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-cyan/80">
+        OCR Regions
+      </p>
+      <div className="mt-2 space-y-2">
+        <div className="rounded-lg border border-cyan/35 bg-cyan/5 px-2 py-1.5 text-[10px] text-cyan/70">
+          Box 01 - ja 94%
+        </div>
+        <div className="rounded-lg border border-cyan/35 bg-cyan/5 px-2 py-1.5 text-[10px] text-cyan/70">
+          Box 02 - ja 91%
+        </div>
+        <div className="rounded-lg border border-cyan/35 bg-cyan/5 px-2 py-1.5 text-[10px] text-cyan/70">
+          Box 03 - ja 89%
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StaticTranslationBackdrop() {
+  return (
+    <div className="absolute left-[8%] bottom-[14%] hidden w-[20rem] rounded-2xl border border-emerald-400/20 bg-black/30 p-3 backdrop-blur-sm lg:block">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-emerald-300/80">
+        Translation Preview
+      </p>
+      <div className="mt-2 space-y-2 text-[11px]">
+        <div className="rounded-lg border border-emerald-400/25 bg-emerald-400/5 px-2 py-1.5 text-emerald-200/75">
+          Wait... I can read this now?
+        </div>
+        <div className="rounded-lg border border-emerald-400/25 bg-emerald-400/5 px-2 py-1.5 text-emerald-200/75">
+          I need the next page right now.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StaticInpaintBackdrop() {
+  return (
+    <div className="absolute left-[6%] top-[14%] hidden w-[16rem] rounded-2xl border border-violet-400/20 bg-black/35 p-3 backdrop-blur-sm lg:block">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-violet-300/80">
+        Inpaint Cleanup
+      </p>
+      <div className="mt-2 space-y-2">
+        <div className="flex items-center justify-between rounded-lg border border-violet-400/25 bg-violet-400/5 px-2 py-1.5 text-[10px]">
+          <span className="text-violet-200/75">bubble_01</span>
+          <span className="text-emerald-300/80">cleaned</span>
+        </div>
+        <div className="flex items-center justify-between rounded-lg border border-violet-400/25 bg-violet-400/5 px-2 py-1.5 text-[10px]">
+          <span className="text-violet-200/75">bubble_02</span>
+          <span className="text-emerald-300/80">patched</span>
+        </div>
+        <div className="flex items-center justify-between rounded-lg border border-violet-400/25 bg-violet-400/5 px-2 py-1.5 text-[10px]">
+          <span className="text-violet-200/75">bubble_03</span>
+          <span className="text-emerald-300/80">blended</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
 export default function HeroSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const prefersReducedMotion = useReducedMotion();
-  const [hasMounted, setHasMounted] = useState(false);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  // Keep SSR and the first client render identical to avoid hydration mismatches.
-  const shouldReduceMotion = hasMounted ? prefersReducedMotion : false;
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  const glowLayerY = useTransform(scrollYProgress, [0, 1], [0, 110]);
-  const scanLineY = useTransform(scrollYProgress, [0, 1], [0, 90]);
-
-  const pointerX = useMotionValue(0.5);
-  const pointerY = useMotionValue(0.5);
-  const glowOffsetX = useSpring(
-    useTransform(pointerX, [0, 1], [-36, 36]),
-    { stiffness: 90, damping: 24 },
-  );
-  const glowOffsetY = useSpring(
-    useTransform(pointerY, [0, 1], [-24, 24]),
-    { stiffness: 90, damping: 24 },
-  );
-
-  const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-    if (shouldReduceMotion) return;
-
-    const bounds = sectionRef.current?.getBoundingClientRect();
-    if (!bounds) return;
-
-    pointerX.set((event.clientX - bounds.left) / bounds.width);
-    pointerY.set((event.clientY - bounds.top) / bounds.height);
-  };
-
-  const handleMouseLeave = () => {
-    pointerX.set(0.5);
-    pointerY.set(0.5);
-  };
-
   return (
-    <section
-      ref={sectionRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen flex items-center overflow-hidden bg-black"
-    >
-      {/* Background layer stack: ambient glow + branded scissor silhouettes + scan line */}
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-black">
+      {/* Static layered background: glow + scissors + OCR + translation */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Ambient glow field: soft cyan bloom that tracks the pointer slightly for depth */}
-        <motion.div
+        <div
           className="absolute inset-[-12%]"
           style={{
-            x: shouldReduceMotion ? 0 : glowOffsetX,
-            y: shouldReduceMotion ? 0 : glowOffsetY,
-            translateY: glowLayerY,
             background:
               "radial-gradient(circle at 22% 20%, rgba(14,165,233,0.18), transparent 24%), radial-gradient(circle at 70% 28%, rgba(56,189,248,0.12), transparent 20%), radial-gradient(circle at 55% 68%, rgba(14,165,233,0.14), transparent 28%), radial-gradient(circle at 48% 48%, rgba(255,255,255,0.03), transparent 40%)",
           }}
-          animate={
-            shouldReduceMotion
-              ? undefined
-              : {
-                  scale: [1, 1.03, 1],
-                  opacity: [0.64, 0.88, 0.64],
-                  rotate: [0, 2, 0],
-                }
-          }
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
         />
 
-        {/* Far background scissors: biggest silhouette, faintest opacity, slowest drift */}
-        <ScissorLayer
+        <StaticScissor
           id="scissor-far-left"
-          scrollYProgress={scrollYProgress}
-          shouldReduceMotion={Boolean(shouldReduceMotion)}
           left="-10%"
           top="2%"
           width="clamp(18rem, 34vw, 32rem)"
           opacity={0.1}
           strokeWidth={10}
           blur="2px"
-          fromY={-24}
-          toY={24}
-          fromRotate={-18}
-          toRotate={-8}
-          baseScale={1.08}
         />
 
-        {/* Mid-back scissors: centered anchor shape that drifts deeper into frame on scroll */}
-        <ScissorLayer
+        <StaticScissor
           id="scissor-center"
-          scrollYProgress={scrollYProgress}
-          shouldReduceMotion={Boolean(shouldReduceMotion)}
           left="34%"
           top="-4%"
           width="clamp(22rem, 42vw, 42rem)"
           opacity={0.14}
           strokeWidth={12}
           blur="1px"
-          fromY={-8}
-          toY={70}
-          fromRotate={4}
-          toRotate={14}
-          baseScale={1.18}
         />
 
-        {/* Front-right scissors: brighter layer with opposing motion for stronger depth */}
-        <ScissorLayer
+        <StaticScissor
           id="scissor-front-right"
-          scrollYProgress={scrollYProgress}
-          shouldReduceMotion={Boolean(shouldReduceMotion)}
           left="70%"
           top="16%"
           width="clamp(12rem, 20vw, 18rem)"
           opacity={0.2}
           strokeWidth={8}
-          fromY={16}
-          toY={-36}
-          fromRotate={22}
-          toRotate={10}
-          baseScale={1}
           flip
         />
 
-        {/* Lower foreground scissors: larger branded silhouette that moves fastest with scroll */}
-        <ScissorLayer
+        <StaticScissor
           id="scissor-lower-left"
-          scrollYProgress={scrollYProgress}
-          shouldReduceMotion={Boolean(shouldReduceMotion)}
           left="2%"
           top="56%"
           width="clamp(16rem, 28vw, 26rem)"
           opacity={0.18}
           strokeWidth={9}
-          fromY={10}
-          toY={122}
-          fromRotate={-10}
-          toRotate={9}
-          baseScale={1.04}
         />
 
-        {/* HUD scan line: a slow cyan pass that reinforces the OCR / scanning feel */}
-        <motion.div
-          className="absolute inset-x-[8%] h-px bg-gradient-to-r from-transparent via-cyan/40 to-transparent opacity-40"
-          style={{ y: scanLineY }}
-          animate={
-            shouldReduceMotion
-              ? undefined
-              : {
-                  top: ["18%", "76%", "18%"],
-                  opacity: [0, 0.4, 0],
-                }
-          }
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        />
+        <div className="absolute inset-x-[8%] top-[62%] h-px bg-gradient-to-r from-transparent via-cyan/35 to-transparent opacity-45" />
+
+        <StaticOcrBackdrop />
+        <StaticInpaintBackdrop />
+        <StaticTranslationBackdrop />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black" />
       </div>
 
       <div className="relative mx-auto flex min-h-screen max-w-5xl items-center px-6 pt-32 pb-24 lg:pt-40 lg:pb-32">
         <div className="w-full text-center">
-          {/* Staggered headline */}
           <motion.h1
             className="heading mx-auto max-w-5xl text-5xl leading-[1.05] text-white sm:text-6xl lg:text-7xl"
             variants={staggerContainer(0.12)}
@@ -324,15 +237,11 @@ export default function HeroSection() {
               </motion.span>
             ))}
             <br />
-            <motion.span
-              variants={heroWord}
-              className="inline-block text-cyan"
-            >
+            <motion.span variants={heroWord} className="inline-block text-cyan">
               Read&nbsp;Instantly.
             </motion.span>
           </motion.h1>
 
-          {/* Subheadline — delayed fade */}
           <motion.p
             className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-gray-400"
             variants={fadeInUp}
@@ -340,13 +249,12 @@ export default function HeroSection() {
             animate="visible"
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            Capture any manga panel, webtoon page, or raw scan — SnipShot&apos;s
+            Capture any manga panel, webtoon page, or raw scan - SnipShot&apos;s
             7-stage AI pipeline detects text, recognises characters, and
             translates to 26+ languages in under a second. No copy-paste, no
             mobile hassle.
           </motion.p>
 
-          {/* CTA button — delayed */}
           <motion.div
             className="mt-8 flex justify-center"
             initial={{ opacity: 0, y: 20 }}
