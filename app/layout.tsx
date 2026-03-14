@@ -10,6 +10,13 @@ const rubik = Rubik({
 
 export const metadata: Metadata = {
   title: "SnipShot – Snip, OCR, Translate Manga Instantly",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png" },
+      { url: "/icon.ico" },
+    ],
+  },
   description:
     "SnipShot is a desktop tool for manga and comic readers. Snip any screenshot, extract text with AI-powered OCR, and get instant multilingual translations. Read raw manga without limits.",
   openGraph: {
