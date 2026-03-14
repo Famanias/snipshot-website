@@ -14,7 +14,6 @@ const bullets = [
   "Sub-second snip → translate → read workflow",
   "Handles complex layouts: vertical text, SFX, speech bubbles",
   "7-stage AI pipeline: detect → OCR → translate → inpaint → render",
-  "GPU-accelerated (RTX / mid-range friendly) or CPU fallback",
   "Survey-backed: 5/5 usefulness from 79+ manga fans",
 ];
 
@@ -40,9 +39,8 @@ export default function AdvantageSection() {
               </h2>
 
               <p className="mt-6 text-gray-400 text-lg leading-relaxed max-w-lg">
-                SnipShot runs natively on your PC — leveraging GPU acceleration,
-                generous RAM, and a full-size display. No mobile crop limits, no
-                cloud latency, no subscription walls. Just fast, accurate manga
+                SnipShot runs seamlessly in the cloud — accessible from any device with a full-size display. No
+                local hardware requirements, no subscription walls. Just fast, accurate
                 translation built for long reading sessions.
               </p>
             </RevealSection>

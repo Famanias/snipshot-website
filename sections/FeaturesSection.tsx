@@ -41,7 +41,7 @@ export default function FeaturesSection() {
         {/* Section header */}
         <RevealSection className="text-center max-w-2xl mx-auto">
           <h2 className="heading text-3xl sm:text-4xl lg:text-5xl text-white">
-            Built for Manga Readers
+            Built for Readers
           </h2>
           <p className="mt-4 text-gray-400 text-lg leading-relaxed">
             Three powerful stages that turn any screenshot into readable,
@@ -81,8 +81,8 @@ export default function FeaturesSection() {
                     href="#cta"
                     className="relative mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan hover:text-white transition-colors"
                   >
-                    Learn More
-                    <ArrowRight className="h-4 w-4" />
+                    {/* Learn More
+                    <ArrowRight className="h-4 w-4" /> */}
                   </a>
                 </motion.div>
               </MouseTiltCard>

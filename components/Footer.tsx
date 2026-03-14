@@ -1,22 +1,25 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Scissors, ArrowRight, Twitter, Linkedin, Instagram } from "lucide-react";
-import { FormEvent, useRef } from "react";
+import { Scissors } from "lucide-react";
 import { staggerContainer, fadeInUp } from "./motion/variants";
 
 const productLinks = [
   { label: "Features", href: "#features" },
-  { label: "Why Desktop", href: "#advantage" },
+  { label: "Why SnipShot", href: "#advantage" },
   { label: "Results", href: "#metrics" },
   { label: "Download", href: "#cta" },
 ];
 
 const projectLinks = [
-  { label: "About", href: "#" },
-  { label: "GitHub", href: "https://github.com/" },
-  { label: "Thesis", href: "#" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/about" },
+  { label: "Documentation", href: "/docs" },
+  // { label: "Contact", href: "#contact" },
+];
+
+const legal = [
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Privacy Policy", href: "/privacy" },
 ];
 
 // const socials = [
@@ -26,13 +29,6 @@ const projectLinks = [
 // ];
 
 export default function Footer() {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (inputRef.current) inputRef.current.value = "";
-  };
-
   return (
     <footer id="contact" className="bg-black border-t border-[#1A1A1A]">
       <div className="mx-auto max-w-7xl px-6 py-16">
@@ -99,30 +95,26 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Col 4 — Stay Updated */}
+          {/* Col 4 — Legal links */}
           <motion.div variants={fadeInUp}>
             <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500">
-              Stay Updated
+              Legal
             </h4>
-            <form onSubmit={handleSubmit} className="mt-4 flex">
-              <input
-                ref={inputRef}
-                type="email"
-                required
-                placeholder="you@email.com"
-                className="w-full bg-white/5 border border-white/10 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan"
-              />
-              <button
-                type="submit"
-                className="clip-corner bg-cyan px-4 py-2.5 text-black hover:bg-cyan-dark transition-colors"
-                aria-label="Subscribe"
-              >
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
-            <p className="mt-2 text-xs text-gray-500">
-              Get notified on new releases and updates.
-            </p>
+            <ul className="mt-4 space-y-3">
+              {legal.map((l) => (
+                <li key={l.label}>
+                  <a
+                    href={l.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    {...(l.href.startsWith("http")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </motion.div>
         </motion.div>
       </div>

@@ -14,7 +14,7 @@ export default function WorkflowSection() {
             How It Works
           </p>
           <h2 className="heading mt-4 text-3xl text-white sm:text-4xl lg:text-5xl">
-            Watch SnipShot Go From Raw Panel To Readable Translation
+            From Raw Panel To Readable Translation
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-gray-400">
             A single capture kicks off the entire flow: snip the panel, detect the text,
