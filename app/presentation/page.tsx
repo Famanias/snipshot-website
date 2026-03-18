@@ -3,28 +3,53 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Maximize, Minimize } from "lucide-react";
+import { Barlow, Instrument_Serif } from "next/font/google";
 import {
   TitleSlide,
   IntroSlide,
   MethodsSlide,
   ResultsSlide,
+  WorkflowSlide,
+  SampleResultsSlide,
   DiscussionSlide,
   ConclusionSlide,
 } from "./slides";
 
+const barlow = Barlow({
+  variable: "--font-barlow",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const VIDEO_SRC =
+  "/hf_20260217_030345_246c0224-10a4-422c-b324-070b7c0eceda.mp4";
+
 const slides = [
-  { id: "title", component: TitleSlide },
-  { id: "intro", component: IntroSlide },
-  { id: "methods", component: MethodsSlide },
-  { id: "results", component: ResultsSlide },
-  { id: "discussion", component: DiscussionSlide },
-  { id: "conclusion", component: ConclusionSlide },
-] as const;
+  { id: "title",          component: TitleSlide },
+  { id: "intro",          component: IntroSlide },
+  { id: "methods",        component: MethodsSlide },
+  { id: "results",        component: ResultsSlide },
+  { id: "workflow",       component: WorkflowSlide },
+  { id: "samples",        component: SampleResultsSlide },
+  { id: "discussion",     component: DiscussionSlide },
+  { id: "conclusion",     component: ConclusionSlide },
+];
 
 export default function PresentationPage() {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const isWorkflowSlide = slides[current].id === "workflow";
 
   const toggleFullscreen = async () => {
     if (document.fullscreenElement) {
@@ -64,6 +89,7 @@ export default function PresentationPage() {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      if (isWorkflowSlide) return;
       if (e.key === "ArrowRight" || e.key === " ") {
         e.preventDefault();
         next();
@@ -75,47 +101,66 @@ export default function PresentationPage() {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [next, prev]);
+  }, [next, prev, isWorkflowSlide]);
 
   const SlideComponent = slides[current].component;
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-50 font-rubik overflow-hidden flex flex-col selection:bg-cyan/30">
+    <div
+      className={`${barlow.variable} ${instrumentSerif.variable} min-h-screen text-white overflow-hidden flex flex-col selection:bg-white/20`}
+      style={{ fontFamily: "var(--font-barlow), sans-serif" }}
+    >
+      {/* ── Video background ── */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="fixed inset-0 w-full h-full object-cover z-0"
+        src={VIDEO_SRC}
+      />
+      <div className="fixed inset-0 bg-black/20 z-1" />
+
       {/* ── Progress bar ── */}
-      <div className="h-1 w-full bg-gray-900 fixed top-0 z-50">
+      <div className="h-px w-full bg-white/10 fixed top-0 z-50">
         <motion.div
-          className="h-full bg-linear-to-r from-cyan to-sky-300"
+          className="h-full bg-white/80"
           initial={{ width: 0 }}
           animate={{
             width: `${((current + 1) / slides.length) * 100}%`,
           }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
         />
       </div>
 
-      {/* ── Fullscreen toggle ── */}
+      {/* ── Top bar: counter + fullscreen ── */}
+      <div className="fixed top-6 left-6 z-50 text-[11px] font-mono text-white/40 tracking-widest">
+        {String(current + 1).padStart(2, "0")} /{" "}
+        {String(slides.length).padStart(2, "0")}
+      </div>
+
       <button
         onClick={toggleFullscreen}
-        className="fixed top-6 right-6 z-50 p-3 rounded-full bg-gray-900/80 border border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800 transition-all backdrop-blur-sm"
+        className="fixed top-5 right-6 z-50 p-2.5 bg-white/10 backdrop-blur-md border border-white/15 rounded-sm text-white/60 hover:text-white hover:bg-white/20 transition-all"
         title="Toggle Fullscreen"
       >
         {isFullscreen ? (
-          <Minimize className="w-5 h-5" />
+          <Minimize className="w-4 h-4" />
         ) : (
-          <Maximize className="w-5 h-5" />
+          <Maximize className="w-4 h-4" />
         )}
       </button>
 
       {/* ── Slide area ── */}
-      <main className="flex-1 relative">
+      <main className="flex-1 relative z-2">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={current}
             custom={direction}
-            initial={{ opacity: 0, x: direction * 50, filter: "blur(4px)" }}
-            animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, x: direction * -50, filter: "blur(4px)" }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
             className="absolute inset-0"
           >
             <SlideComponent />
@@ -124,24 +169,24 @@ export default function PresentationPage() {
       </main>
 
       {/* ── Bottom navigation ── */}
-      <div className="fixed bottom-8 left-0 right-0 flex justify-center items-center gap-8 z-50">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 bg-white/8 backdrop-blur-md border border-white/12 rounded-sm px-5 py-2.5">
         <button
           onClick={prev}
           disabled={current === 0}
-          className="p-3 rounded-full bg-gray-900/80 border border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all backdrop-blur-sm"
+          className="p-1.5 text-white/50 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-4 h-4" />
         </button>
 
-        <div className="flex gap-2">
+        <div className="flex gap-1.5">
           {slides.map((s, i) => (
             <button
               key={s.id}
               onClick={() => goTo(i)}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
+              className={`rounded-full transition-all duration-300 ${
                 current === i
-                  ? "bg-cyan w-8"
-                  : "bg-gray-700 w-2.5 hover:bg-gray-500"
+                  ? "bg-white w-6 h-1.5"
+                  : "bg-white/25 w-1.5 h-1.5 hover:bg-white/50"
               }`}
             />
           ))}
@@ -150,15 +195,10 @@ export default function PresentationPage() {
         <button
           onClick={next}
           disabled={current === slides.length - 1}
-          className="p-3 rounded-full bg-gray-900/80 border border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all backdrop-blur-sm"
+          className="p-1.5 text-white/50 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-4 h-4" />
         </button>
-      </div>
-
-      {/* ── Keyboard hint ── */}
-      <div className="fixed bottom-8 right-8 text-xs text-gray-600 hidden md:block font-mono">
-        Use arrow keys to navigate
       </div>
     </div>
   );

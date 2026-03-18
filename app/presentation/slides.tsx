@@ -1,10 +1,8 @@
-"use client";
+﻿"use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Scissors,
-  Image,
-  Type,
   AlertTriangle,
   ChevronRight,
   BarChart3,
@@ -18,337 +16,355 @@ import {
   Eye,
   Brain,
 } from "lucide-react";
+import WorkflowAnimation from "@/components/WorkflowAnimation";
 
-/* ─── animation helpers ─── */
+
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp = (delay = 0) => ({
-  initial: { y: 30, opacity: 0 },
-  animate: { y: 0, opacity: 1 },
-  transition: { delay, duration: 0.7, ease: EASE },
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, delay, ease: EASE },
 });
 
 const fadeLeft = (delay = 0) => ({
-  initial: { x: -50, opacity: 0 },
-  animate: { x: 0, opacity: 1 },
-  transition: { delay, duration: 0.7, ease: EASE },
+  initial: { opacity: 0, x: -24 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.6, delay, ease: EASE },
 });
 
 const fadeRight = (delay = 0) => ({
-  initial: { x: 50, opacity: 0 },
-  animate: { x: 0, opacity: 1 },
-  transition: { delay, duration: 0.7, ease: EASE },
+  initial: { opacity: 0, x: 24 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.6, delay, ease: EASE },
 });
 
 const scaleUp = (delay = 0) => ({
-  initial: { scale: 0.9, opacity: 0 },
-  animate: { scale: 1, opacity: 1 },
-  transition: { delay, duration: 0.7, ease: EASE },
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.6, delay, ease: EASE },
 });
 
-/* ─────────────────────────── TITLE SLIDE ─────────────────────────── */
+
+function CornerAccents() {
+  return (
+    <>
+      <span className="absolute top-0 left-0 w-1.75 h-1.75 bg-white/80" />
+      <span className="absolute top-0 right-0 w-1.75 h-1.75 bg-white/80" />
+      <span className="absolute bottom-0 left-0 w-1.75 h-1.75 bg-white/80" />
+      <span className="absolute bottom-0 right-0 w-1.75 h-1.75 bg-white/80" />
+    </>
+  );
+}
+
+function GlassPanel({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`relative bg-white/7 backdrop-blur-md border border-white/12 rounded-xl p-8 ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+function GlassBadge({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <span
+      className={`inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/15 rounded-sm text-sm ${className}`}
+    >
+      {children}
+    </span>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-xs uppercase tracking-[0.3em] text-white/40 font-light mb-3">
+      {children}
+    </p>
+  );
+}
+
 
 export function TitleSlide() {
   return (
-    <div className="flex flex-col h-full items-center justify-center px-8 md:px-24 max-w-7xl mx-auto w-full text-center">
-      {/* Decorative glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 rounded-full blur-3xl opacity-20"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(14,165,233,0.4), transparent 70%)",
-          }}
-        />
+    <div className="flex flex-col h-full items-center justify-center text-center px-8">
+      <div className="max-w-225 mx-auto">
+        <motion.div {...fadeUp(0)}>
+          <GlassBadge className="mb-8 text-white/60 text-xs">
+            Research Paper Presentation
+          </GlassBadge>
+        </motion.div>
+
+        <motion.h1
+          {...fadeUp(0.15)}
+          className="text-5xl md:text-7xl font-light text-white leading-[1.1] mb-6 tracking-tight"
+        >
+          Snip<span className="font-semibold">Shot</span>
+        </motion.h1>
+
+        <motion.p
+          {...fadeUp(0.3)}
+          className="text-lg md:text-xl text-white/50 font-light leading-relaxed max-w-2xl mx-auto mb-10"
+        >
+          A Deep Learningâ€“Based System for Translating{" "}
+          <em className="font-(family-name:--font-instrument) italic text-white/80">
+            Text in Digital Comics
+          </em>
+        </motion.p>
+
+        <motion.div {...fadeUp(0.45)}>
+          <GlassPanel className="inline-block text-left px-10 py-6">
+            <CornerAccents />
+            <p className="text-sm text-white/80 font-medium">
+              John Lynard F. Isip &middot; Arvin Shelby de Leon &middot; Denise
+              Lou B. Punzalan
+            </p>
+            <p className="text-xs text-white/35 mt-1.5 font-light">
+              Gordon College, Olongapo City, Philippines
+            </p>
+          </GlassPanel>
+        </motion.div>
       </div>
-
-      <motion.div
-        {...scaleUp(0)}
-        className="mb-8 mx-auto w-20 h-20 rounded-2xl bg-cyan/10 border border-cyan/20 flex items-center justify-center"
-      >
-        <Scissors className="w-10 h-10 text-cyan" />
-      </motion.div>
-
-      <motion.h1
-        {...fadeUp(0.2)}
-        className="text-5xl md:text-7xl font-bold tracking-tight text-white max-w-5xl leading-tight"
-      >
-        <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan to-sky-300">
-          SnipShot
-        </span>
-      </motion.h1>
-
-      <motion.h2
-        {...fadeUp(0.4)}
-        className="text-xl md:text-3xl font-medium text-gray-300 max-w-4xl leading-relaxed mt-4"
-      >
-        A Deep Learning–Based System for Translating Text in Digital Comics
-      </motion.h2>
-
-      <motion.div
-        {...fadeUp(0.6)}
-        className="pt-12 flex flex-col items-center space-y-4"
-      >
-        <p className="text-sm uppercase tracking-widest text-gray-500 font-semibold">
-          Researchers
-        </p>
-        <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-gray-400 font-medium">
-          <span className="text-cyan">John Lynard F. Isip</span>
-          <span>Arvin Shelby de Leon</span>
-          <span>Denise Lou B. Punzalan</span>
-        </div>
-        <p className="text-xs text-gray-600 pt-2">
-          Gordon College, Olongapo City, Philippines
-        </p>
-      </motion.div>
     </div>
   );
 }
 
-/* ─────────────────────────── INTRODUCTION SLIDE ─────────────────────────── */
 
 export function IntroSlide() {
   return (
-    <div className="flex flex-col h-full justify-center px-8 md:px-24 max-w-7xl mx-auto w-full">
-      <div className="mb-12">
-        <h2 className="text-sm uppercase tracking-widest text-cyan font-bold mb-2">
-          Introduction
-        </h2>
-        <h3 className="text-4xl md:text-5xl font-bold text-white">
-          The Language Barrier in Comics
-        </h3>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-12 items-center">
-        <motion.div
-          {...fadeLeft(0.2)}
-          className="space-y-6"
+    <div className="flex flex-col h-full justify-center px-8">
+      <div className="max-w-275 mx-auto w-full">
+        <SectionLabel>Introduction</SectionLabel>
+        <motion.h2
+          {...fadeUp(0)}
+          className="text-4xl md:text-5xl font-light text-white mb-12 tracking-tight"
         >
-          <p className="text-xl text-gray-300 leading-relaxed">
-            Digital comics attract{" "}
-            <span className="text-cyan font-semibold">150 million</span>{" "}
-            monthly readers worldwide, yet translating embedded text remains a{" "}
-            <span className="text-rose-400 font-semibold">
-              fragmented, 7-step process
-            </span>
-            .
-          </p>
+          The Language Barrier{" "}
+          <em className="font-(family-name:--font-instrument) italic text-white/70">
+            in Comics
+          </em>
+        </motion.h2>
 
-          <ul className="space-y-4 text-gray-400 text-lg">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-6 h-6 text-cyan shrink-0 mt-1" />
-              <span>
-                Existing tools are mobile-only, leaving desktop readers
-                underserved.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-6 h-6 text-cyan shrink-0 mt-1" />
-              <span>
-                Text overlays disrupt visual storytelling and artistic
-                composition.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-6 h-6 text-cyan shrink-0 mt-1" />
-              <span>
-                Multi-step workflows interrupt the natural reading flow.
-              </span>
-            </li>
-          </ul>
-        </motion.div>
-
-        <motion.div {...fadeRight(0.4)} className="relative">
-          <div className="absolute inset-0 bg-linear-to-tr from-cyan/20 to-sky-500/10 rounded-3xl blur-2xl" />
-          <div className="relative bg-gray-900/50 border border-gray-800 p-8 rounded-3xl flex flex-col items-center gap-8">
-            {/* Traditional workflow vs SnipShot */}
-            <div className="flex items-center justify-between w-full px-4">
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-16 h-16 rounded-2xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center">
-                  <Clock className="w-8 h-8 text-rose-400" />
-                </div>
-                <p className="text-sm text-gray-400 text-center">
-                  Traditional
-                  <br />
-                  <span className="text-rose-400 font-bold">7 Steps</span>
-                </p>
-              </div>
-
-              <ChevronRight className="w-8 h-8 text-gray-600" />
-
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-16 h-16 rounded-2xl bg-cyan/20 border border-cyan/30 flex items-center justify-center">
-                  <Zap className="w-8 h-8 text-cyan" />
-                </div>
-                <p className="text-sm text-gray-400 text-center">
-                  SnipShot
-                  <br />
-                  <span className="text-cyan font-bold">1 Click</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full border-t border-gray-800 pt-6">
-              <p className="text-2xl font-bold text-white mb-2">SnipShot</p>
-              <p className="text-gray-400">
-                Snip any panel, get an instant in-image translation{" "}
-                <br />
-                powered by deep learning—no manual steps.
+        <div className="grid md:grid-cols-2 gap-8">
+          <motion.div {...fadeLeft(0.2)}>
+            <GlassPanel>
+              <CornerAccents />
+              <p className="text-lg text-white/70 font-light leading-relaxed mb-6">
+                Digital comics attract{" "}
+                <span className="text-white font-medium">150 million</span>{" "}
+                monthly readers worldwide, yet translating embedded text remains
+                a{" "}
+                <span className="text-rose-300 font-medium">
+                  fragmented, multi-step process
+                </span>
+                .
               </p>
-            </div>
-          </div>
-        </motion.div>
+
+              <div className="space-y-4">
+                {[
+                  "Existing tools are mobile-only, leaving desktop readers underserved.",
+                  "Text overlays disrupt visual storytelling and artistic composition.",
+                  "Multi-step workflows interrupt the natural reading flow.",
+                ].map((text, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <AlertTriangle className="w-4 h-4 text-white/40 shrink-0 mt-0.5" />
+                    <span className="text-sm text-white/50 font-light">
+                      {text}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </GlassPanel>
+          </motion.div>
+
+          <motion.div {...fadeRight(0.4)}>
+            <GlassPanel className="flex flex-col items-center gap-8">
+              <CornerAccents />
+              <div className="flex items-center justify-between w-full px-4">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-14 h-14 rounded-lg bg-white/6 border border-white/10 flex items-center justify-center">
+                    <Clock className="w-7 h-7 text-rose-300/80" />
+                  </div>
+                  <div className="text-center">
+                    <GlassBadge className="text-xs text-rose-300">
+                      Multi-Steps
+                    </GlassBadge>
+                    <p className="text-[10px] text-white/30 mt-1 font-light">
+                      Traditional
+                    </p>
+                  </div>
+                </div>
+
+                <ChevronRight className="w-6 h-6 text-white/20" />
+
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-14 h-14 rounded-lg bg-white/6 border border-white/10 flex items-center justify-center">
+                    <Zap className="w-7 h-7 text-cyan/80" />
+                  </div>
+                  <div className="text-center">
+                    <GlassBadge className="text-xs text-cyan">
+                      1 Click
+                    </GlassBadge>
+                    <p className="text-[10px] text-white/30 mt-1 font-light">
+                      SnipShot
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full border-t border-white/10 pt-6">
+                <p className="text-xl font-medium text-white mb-2">SnipShot</p>
+                <p className="text-sm text-white/40 font-light">
+                  Snip any panel, get an instant in-image translation powered by
+                  deep learning with no manual steps.
+                </p>
+              </div>
+            </GlassPanel>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
 }
 
-/* ─────────────────────────── METHODS SLIDE ─────────────────────────── */
 
 export function MethodsSlide() {
   return (
-    <div className="flex flex-col h-full justify-center px-8 md:px-24 max-w-7xl mx-auto w-full">
-      <div className="mb-12">
-        <h2 className="text-sm uppercase tracking-widest text-emerald-400 font-bold mb-2">
-          Methodology
-        </h2>
-        <h3 className="text-4xl md:text-5xl font-bold text-white">
-          Five-Stage AI Pipeline
-        </h3>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Pipeline card */}
-        <motion.div
-          {...fadeUp(0.2)}
-          className="bg-gray-900/50 border border-gray-800 p-8 rounded-3xl"
+    <div className="flex flex-col h-full justify-center px-8">
+      <div className="max-w-275 mx-auto w-full">
+        <SectionLabel>Methodology</SectionLabel>
+        <motion.h2
+          {...fadeUp(0)}
+          className="text-4xl md:text-5xl font-light text-white mb-12 tracking-tight"
         >
-          <Brain className="w-12 h-12 text-emerald-400 mb-6" />
-          <h4 className="text-2xl font-bold text-white mb-4">
-            System Architecture
-          </h4>
-          <p className="text-gray-400 mb-6">
-            End-to-end deep learning pipeline integrating five specialized AI
-            models.
-          </p>
+          Five-Stage{" "}
+          <em className="font-(family-name:--font-instrument) italic text-white/70">
+            AI Pipeline
+          </em>
+        </motion.h2>
 
-          <div className="space-y-3 text-gray-300">
-            {[
-              {
-                step: "01",
-                label: "Detection",
-                tech: "DBNet + ResNet-34",
-                color: "bg-cyan",
-              },
-              {
-                step: "02",
-                label: "OCR",
-                tech: "RoFormer + XPOS",
-                color: "bg-sky-400",
-              },
-              {
-                step: "03",
-                label: "Translation",
-                tech: "Llama-3-70b",
-                color: "bg-emerald-400",
-              },
-              {
-                step: "04",
-                label: "Inpainting",
-                tech: "LaMa",
-                color: "bg-violet-400",
-              },
-              {
-                step: "05",
-                label: "Rendering",
-                tech: "Text Placement",
-                color: "bg-amber-400",
-              },
-            ].map((s) => (
-              <div key={s.step} className="flex items-center gap-3">
-                <div
-                  className={`w-1.5 h-1.5 rounded-full ${s.color}`}
-                />
-                <span className="text-gray-500 font-mono text-sm w-6">
-                  {s.step}
-                </span>
-                <span className="font-semibold">{s.label}</span>
-                <span className="text-gray-600 text-sm ml-auto font-mono">
-                  {s.tech}
+        <div className="grid md:grid-cols-2 gap-8">
+          <motion.div {...fadeUp(0.2)}>
+            <GlassPanel>
+              <CornerAccents />
+              <Brain className="w-10 h-10 text-white/50 mb-5" />
+              <h4 className="text-xl font-medium text-white mb-3">
+                System Architecture
+              </h4>
+              <p className="text-sm text-white/40 font-light mb-6">
+                End-to-end deep learning pipeline integrating five specialized
+                AI models.
+              </p>
+
+              <div className="space-y-3">
+                {[
+                  {
+                    step: "01",
+                    label: "Detection",
+                    tech: "DBNet + ResNet-34",
+                  },
+                  { step: "02", label: "OCR", tech: "RoFormer + XPOS" },
+                  { step: "03", label: "Translation", tech: "Llama-3-70b" },
+                  { step: "04", label: "Inpainting", tech: "LaMa" },
+                  {
+                    step: "05",
+                    label: "Rendering",
+                    tech: "Text Placement",
+                  },
+                ].map((s) => (
+                  <div key={s.step} className="flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                    <span className="text-white/30 font-mono text-xs w-5">
+                      {s.step}
+                    </span>
+                    <span className="text-white/80 text-sm font-medium">
+                      {s.label}
+                    </span>
+                    <span className="text-white/25 text-xs ml-auto font-mono">
+                      {s.tech}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </GlassPanel>
+          </motion.div>
+
+          <motion.div {...fadeUp(0.4)}>
+            <GlassPanel>
+              <CornerAccents />
+              <BarChart3 className="w-10 h-10 text-white/50 mb-5" />
+              <h4 className="text-xl font-medium text-white mb-3">
+                Research Design
+              </h4>
+              <p className="text-sm text-white/40 font-light mb-6">
+                Descriptive-developmental study using Design Science Research
+                (DSR) with Agile methodology.
+              </p>
+
+              <div className="flex items-center gap-4 mb-6">
+                <GlassBadge className="text-2xl font-medium text-white">
+                  N=79
+                </GlassBadge>
+                <span className="text-xs text-white/30 uppercase tracking-wider font-light">
+                  Survey
+                  <br />
+                  Participants
                 </span>
               </div>
-            ))}
-          </div>
-        </motion.div>
 
-        {/* Research design card */}
-        <motion.div
-          {...fadeUp(0.4)}
-          className="bg-gray-900/50 border border-gray-800 p-8 rounded-3xl"
-        >
-          <BarChart3 className="w-12 h-12 text-cyan mb-6" />
-          <h4 className="text-2xl font-bold text-white mb-4">
-            Research Design
-          </h4>
-          <p className="text-gray-400 mb-6">
-            Descriptive-developmental study using Design Science Research (DSR)
-            with Agile methodology.
-          </p>
-
-          <div className="flex items-center gap-4 mb-6">
-            <div className="text-4xl font-black text-cyan">N=79</div>
-            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">
-              Survey
-              <br />
-              Participants
-            </div>
-          </div>
-
-          <ul className="space-y-3 text-gray-300">
-            <li className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan" />
-              Technology Acceptance Model (TAM) framework
-            </li>
-            <li className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan" />
-              20 beta testers for hands-on evaluation
-            </li>
-            <li className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan" />
-              BLEU-4 automated translation benchmarking
-            </li>
-          </ul>
-        </motion.div>
+              <div className="space-y-3 text-sm text-white/50 font-light">
+                {[
+                  "Technology Acceptance Model (TAM) framework",
+                  "20 beta testers for hands-on evaluation",
+                  "BLEU-4 automated translation benchmarking",
+                ].map((text, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+                    {text}
+                  </div>
+                ))}
+              </div>
+            </GlassPanel>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
 }
 
-/* ─────────────────────────── RESULTS SLIDE ─────────────────────────── */
 
 function ProgressBar({
   label,
   percentage,
-  textColor,
-  bgColor,
 }: {
   label: string;
   percentage: number;
-  textColor: string;
-  bgColor: string;
 }) {
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-end">
-        <span className="text-gray-300 font-medium">{label}</span>
-        <span className={`${textColor} font-bold`}>{percentage}%</span>
+        <span className="text-white/60 text-sm font-light">{label}</span>
+        <span className="text-white font-medium text-sm">{percentage}%</span>
       </div>
-      <div className="h-3 bg-gray-800 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-white/6 rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-          className={`h-full rounded-full ${bgColor}`}
+          className="h-full rounded-full bg-white/60"
         />
       </div>
     </div>
@@ -357,221 +373,372 @@ function ProgressBar({
 
 export function ResultsSlide() {
   return (
-    <div className="flex flex-col h-full justify-center px-8 md:px-24 max-w-7xl mx-auto w-full">
-      <div className="mb-12">
-        <h2 className="text-sm uppercase tracking-widest text-amber-400 font-bold mb-2">
-          Results
-        </h2>
-        <h3 className="text-4xl md:text-5xl font-bold text-white">
-          Proven Performance
-        </h3>
-      </div>
-
-      <div className="grid md:grid-cols-12 gap-12">
-        {/* Key stats */}
-        <motion.div
-          {...fadeLeft(0.2)}
-          className="md:col-span-5 space-y-8"
+    <div className="flex flex-col h-full justify-center px-8">
+      <div className="max-w-275 mx-auto w-full">
+        <SectionLabel>Results</SectionLabel>
+        <motion.h2
+          {...fadeUp(0)}
+          className="text-4xl md:text-5xl font-light text-white mb-12 tracking-tight"
         >
-          <div className="bg-gray-900/80 border border-gray-800 p-8 rounded-3xl">
-            <Target className="w-10 h-10 text-amber-400 mb-6" />
-            <h4 className="text-xl font-bold text-white mb-2">
-              Technical Benchmarks
-            </h4>
-            <p className="text-gray-400 mb-6">
-              Automated evaluation across 9 test runs with human-verified ground
-              truth.
-            </p>
+          Proven{" "}
+          <em className="font-(family-name:--font-instrument) italic text-white/70">
+            Performance
+          </em>
+        </motion.h2>
 
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { value: "88.98%", label: "OCR Accuracy" },
-                { value: "0.6139", label: "BLEU Score" },
-                { value: "~5s", label: "Mean Process Time" },
-                { value: "85.92%", label: "OCR Confidence" },
-              ].map((m) => (
-                <div
-                  key={m.label}
-                  className="p-3 bg-amber-500/10 rounded-2xl border border-amber-500/20 text-center"
-                >
-                  <div className="text-xl font-black text-amber-300">
-                    {m.value}
+        <div className="grid md:grid-cols-12 gap-8">
+          <motion.div {...fadeLeft(0.2)} className="md:col-span-5">
+            <GlassPanel>
+              <CornerAccents />
+              <Target className="w-8 h-8 text-white/50 mb-5" />
+              <h4 className="text-lg font-medium text-white mb-2">
+                Technical Benchmarks
+              </h4>
+              <p className="text-xs text-white/35 font-light mb-6">
+                Automated evaluation across 9 test runs with human-verified
+                ground truth.
+              </p>
+
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { value: "88.98%", label: "OCR Accuracy" },
+                  { value: "0.6139", label: "BLEU Score" },
+                  { value: "~5s", label: "Mean Process Time" },
+                  { value: "85.92%", label: "OCR Confidence" },
+                ].map((m) => (
+                  <div
+                    key={m.label}
+                    className="flex flex-col items-center gap-0.5 px-2 py-3 bg-white/6 backdrop-blur-sm border border-white/10 rounded-sm"
+                  >
+                    <span className="text-lg font-medium text-white">
+                      {m.value}
+                    </span>
+                    <span className="text-[10px] text-white/30 font-light">
+                      {m.label}
+                    </span>
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">{m.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+                ))}
+              </div>
+            </GlassPanel>
+          </motion.div>
 
-        {/* Progress bars */}
-        <motion.div
-          {...fadeRight(0.4)}
-          className="md:col-span-7 space-y-8 bg-gray-900/30 p-8 rounded-3xl border border-gray-800/50"
-        >
-          <h4 className="text-2xl font-bold text-white mb-8">
-            User Acceptance (TAM)
-          </h4>
-
-          <div className="space-y-8">
-            <ProgressBar
-              label="Perceived Usefulness (PU)"
-              percentage={78.4}
-              textColor="text-cyan"
-              bgColor="bg-cyan"
-            />
-            <ProgressBar
-              label="Perceived Ease of Use (PEU)"
-              percentage={70.0}
-              textColor="text-emerald-400"
-              bgColor="bg-emerald-400"
-            />
-            <ProgressBar
-              label="BLEU scores for 11+ char segments"
-              percentage={72.2}
-              textColor="text-violet-400"
-              bgColor="bg-violet-400"
-            />
-            <ProgressBar
-              label="Sub-linear scaling across resolutions"
-              percentage={88.9}
-              textColor="text-amber-400"
-              bgColor="bg-amber-400"
-            />
-          </div>
-        </motion.div>
+          <motion.div {...fadeRight(0.4)} className="md:col-span-7">
+            <GlassPanel>
+              <CornerAccents />
+              <h4 className="text-lg font-medium text-white mb-8">
+                User Acceptance (TAM)
+              </h4>
+              <div className="space-y-8">
+                <ProgressBar
+                  label="Perceived Usefulness (PU)"
+                  percentage={78.4}
+                />
+                <ProgressBar
+                  label="Perceived Ease of Use (PEU)"
+                  percentage={70.0}
+                />
+                <ProgressBar
+                  label="BLEU scores for 11+ char segments"
+                  percentage={72.2}
+                />
+                <ProgressBar
+                  label="Sub-linear scaling across resolutions"
+                  percentage={88.9}
+                />
+              </div>
+            </GlassPanel>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
 }
 
-/* ─────────────────────────── DISCUSSION SLIDE ─────────────────────────── */
+
+export function WorkflowSlide() {
+  return <WorkflowAnimation />;
+}
+
+
+// ── Replace the empty strings below with real file paths inside /public ─────────────────────────
+// e.g. easy.raw = "/sample_pages/easy_raw.png"
+// Complex images are landscape; easy & medium are portrait.
+// All three panels share the same frame — images are fitted via object-contain.
+const SAMPLE_IMAGES = {
+  easy: {
+    raw: "/sample_pages/test-image-easy1.jpg",
+    inpainted: "/sample_pages/test-image-easy1_inpainted.png",
+    translated: "/sample_pages/test-image-easy1_translated.png"
+  },
+  medium: {
+    raw: "/sample_pages/test-image-medium.png",
+    inpainted: "/sample_pages/test-image-medium_inpainted.png",
+    translated: "/sample_pages/test-image-medium_translated.png"
+  },
+  complex: {
+    raw: "/sample_pages/test-image-complex1.png",
+    inpainted: "/sample_pages/test-image-complex1_inpainted.png",
+    translated: "/sample_pages/test-image-complex1_translated.png"
+  },
+} satisfies Record<string, Record<string, string>>;
+
+export function SampleResultsSlide() {
+  const [category, setCategory] = useState<"easy" | "medium" | "complex">("easy");
+
+  const categories = [
+    { id: "easy" as const,    label: "Easy",    orient: "Portrait" },
+    { id: "medium" as const,  label: "Medium",  orient: "Portrait" },
+    { id: "complex" as const, label: "Complex", orient: "Landscape" },
+  ];
+
+  const panels = [
+    { key: "raw" as const,        label: "Raw Image" },
+    { key: "inpainted" as const,  label: "Inpainted" },
+    { key: "translated" as const, label: "Translated" },
+  ];
+
+  return (
+    <div className="flex h-full">
+      {/* ── Sidebar ──────────────────────────────────────── */}
+      <motion.aside
+        {...fadeLeft(0)}
+        className="w-52 flex flex-col justify-center gap-2 px-6 border-r border-white/10 shrink-0"
+      >
+        <SectionLabel>Demonstration</SectionLabel>
+        <h2 className="text-2xl font-light text-white mb-6 tracking-tight">
+          Sample{" "}
+          <em className="font-(family-name:--font-instrument) italic text-white/70">
+            Results
+          </em>
+        </h2>
+
+        <div className="space-y-2">
+          {categories.map((cat, i) => (
+            <motion.button
+              key={cat.id}
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 + i * 0.1, ease: EASE }}
+              onClick={() => setCategory(cat.id)}
+              className={`w-full text-left px-4 py-3 rounded-sm border transition-all duration-300 ${
+                category === cat.id
+                  ? "bg-white/15 border-white/30 text-white"
+                  : "bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:border-white/20 hover:text-white/80"
+              }`}
+            >
+              <span className="block text-sm font-medium">{cat.label}</span>
+              <span className="block text-[10px] text-white/30 font-mono mt-0.5">
+                {cat.orient}
+              </span>
+            </motion.button>
+          ))}
+        </div>
+      </motion.aside>
+
+      {/* ── Image panels ─────────────────────────────────── */}
+      <div className="flex-1 flex flex-col py-10 px-8 gap-4 min-h-0">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={category}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            className="flex gap-5 flex-1 min-h-0"
+          >
+            {panels.map((panel, i) => (
+              <motion.div
+                key={panel.key}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.08, ease: EASE }}
+                className="flex-1 flex flex-col gap-3 min-h-0"
+              >
+                {/* Column header */}
+                <div className="flex items-center gap-3 shrink-0">
+                  <p className="text-xs uppercase tracking-[0.25em] text-white/40 font-light whitespace-nowrap">
+                    {panel.label}
+                  </p>
+                  <div className="flex-1 h-px bg-white/8" />
+                </div>
+
+                {/* Image frame — uniform dimensions for all categories */}
+                <div className="relative flex-1 min-h-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden">
+                  {SAMPLE_IMAGES[category][panel.key] ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={SAMPLE_IMAGES[category][panel.key]}
+                      alt={`${category} ${panel.label}`}
+                      className="absolute inset-0 w-full h-full object-contain"
+                    />
+                  ) : (
+                    /* Placeholder — visible until a real path is set above */
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                      <div className="w-14 h-14 rounded-full border border-dashed border-white/15 flex items-center justify-center">
+                        <Eye className="w-6 h-6 text-white/15" />
+                      </div>
+                      <div className="text-center space-y-1.5 px-6">
+                        <p className="text-[11px] text-white/25 font-medium uppercase tracking-widest">
+                          Placeholder
+                        </p>
+                        <p className="text-[10px] text-white/15 font-mono leading-relaxed">
+                          SAMPLE_IMAGES
+                          <br />
+                          .{category}.{panel.key}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
 
 export function DiscussionSlide() {
   return (
-    <div className="flex flex-col h-full justify-center px-8 md:px-24 max-w-7xl mx-auto w-full">
-      <div className="mb-12">
-        <h2 className="text-sm uppercase tracking-widest text-rose-400 font-bold mb-2">
-          Discussion
-        </h2>
-        <h3 className="text-4xl md:text-5xl font-bold text-white">
-          Insights &amp; Limitations
-        </h3>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Short text challenge */}
-        <motion.div
-          {...scaleUp(0.2)}
-          className="bg-linear-to-br from-gray-900 to-gray-950 border border-gray-800 p-10 rounded-3xl relative overflow-hidden"
+    <div className="flex flex-col h-full justify-center px-8">
+      <div className="max-w-275 mx-auto w-full">
+        <SectionLabel>Discussion</SectionLabel>
+        <motion.h2
+          {...fadeUp(0)}
+          className="text-4xl md:text-5xl font-light text-white mb-12 tracking-tight"
         >
-          <div className="absolute top-0 right-0 p-8 opacity-10">
-            <Type className="w-32 h-32 text-white" />
-          </div>
-          <div className="text-5xl font-black text-rose-400 mb-4">0.41</div>
-          <h4 className="text-2xl font-bold text-white mb-4">
-            Short Text BLEU
-          </h4>
-          <p className="text-gray-400 text-lg relative z-10">
-            Fragments under 10 characters—exclamations, SFX, single words—score
-            lowest, due to limited n-gram overlap. Longer segments achieve{" "}
-            <span className="text-emerald-400 font-semibold">0.72 BLEU</span>.
-          </p>
-        </motion.div>
+          Insights &amp;{" "}
+          <em className="font-(family-name:--font-instrument) italic text-white/70">
+            Limitations
+          </em>
+        </motion.h2>
 
-        {/* Rendering variability */}
-        <motion.div
-          {...scaleUp(0.4)}
-          className="bg-linear-to-br from-gray-900 to-gray-950 border border-gray-800 p-10 rounded-3xl relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 p-8 opacity-10">
-            <Image className="w-32 h-32 text-white" />
-          </div>
-          <div className="text-5xl font-black text-amber-400 mb-4">1.8s</div>
-          <h4 className="text-2xl font-bold text-white mb-4">
-            Rendering Bottleneck
-          </h4>
-          <p className="text-gray-400 text-lg relative z-10">
-            Rendering is the slowest stage (mean 1,805 ms) with high variability
-            due to image complexity and text reconstruction demands.
-          </p>
+        <div className="grid md:grid-cols-2 gap-8">
+          <motion.div {...scaleUp(0.2)}>
+            <GlassPanel className="relative overflow-hidden">
+              <CornerAccents />
+              <div className="text-5xl font-light text-rose-300/90 mb-4">
+                0.41
+              </div>
+              <h4 className="text-xl font-medium text-white mb-4">
+                Short Text BLEU
+              </h4>
+              <p className="text-sm text-white/50 font-light leading-relaxed">
+                Fragments under 10 characters, exclamations, SFX, single
+                words score lowest, due to limited n-gram overlap. Longer
+                segments achieve{" "}
+                <span className="text-emerald-300/90 font-medium">
+                  0.72 BLEU
+                </span>
+                .
+              </p>
+            </GlassPanel>
+          </motion.div>
+
+          <motion.div {...scaleUp(0.4)}>
+            <GlassPanel className="relative overflow-hidden">
+              <CornerAccents />
+              <div className="text-5xl font-light text-amber-300/90 mb-4">
+                1.8s
+              </div>
+              <h4 className="text-xl font-medium text-white mb-4">
+                Rendering Bottleneck
+              </h4>
+              <p className="text-sm text-white/50 font-light leading-relaxed">
+                Rendering is the slowest stage (mean 1,805 ms) with high
+                variability due to image complexity and text reconstruction
+                demands.
+              </p>
+            </GlassPanel>
+          </motion.div>
+        </div>
+
+        <motion.div {...fadeUp(0.6)}>
+          <GlassPanel className="mt-8 flex items-center gap-6 py-5 px-6">
+            <Lightbulb className="w-7 h-7 text-white/40 shrink-0" />
+            <p className="text-sm text-white/60 font-light">
+              <strong className="text-white/90 font-medium">
+                Key takeaway:
+              </strong>{" "}
+              SnipShot excels at multi-sentence dialogue translation but needs
+              domain-specific fine-tuning for stylized fonts, SFX, and very
+              short utterances. Cloud dependency is a limitation for offline use.
+            </p>
+          </GlassPanel>
         </motion.div>
       </div>
-
-      <motion.div
-        {...fadeUp(0.6)}
-        className="mt-12 p-6 bg-gray-900/50 border border-gray-800 rounded-2xl flex items-center gap-6"
-      >
-        <Lightbulb className="w-8 h-8 text-cyan shrink-0" />
-        <p className="text-gray-300">
-          <strong className="text-white">Key takeaway:</strong> SnipShot
-          excels at multi-sentence dialogue translation but needs
-          domain-specific fine-tuning for stylized fonts, SFX, and very short
-          utterances. Cloud dependency is a limitation for offline use.
-        </p>
-      </motion.div>
     </div>
   );
 }
 
-/* ─────────────────────────── CONCLUSION SLIDE ─────────────────────────── */
 
 export function ConclusionSlide() {
   return (
-    <div className="flex flex-col h-full justify-center px-8 md:px-24 max-w-7xl mx-auto w-full text-center">
-      <motion.div
-        {...scaleUp(0)}
-        className="mx-auto bg-cyan/10 w-24 h-24 rounded-full flex items-center justify-center mb-8 border border-cyan/20"
-      >
-        <Rocket className="w-12 h-12 text-cyan" />
-      </motion.div>
+    <div className="flex flex-col h-full justify-center px-8 text-center">
+      <div className="max-w-250 mx-auto w-full">
+        <motion.div
+          {...scaleUp(0)}
+          className="mx-auto w-20 h-20 rounded-full bg-white/6 border border-white/12 flex items-center justify-center mb-8"
+        >
+          <Rocket className="w-10 h-10 text-white/60" />
+        </motion.div>
 
-      <motion.h3
-        {...fadeUp(0.2)}
-        className="text-4xl md:text-6xl font-bold text-white mb-8"
-      >
-        Bridging the Language Gap
-      </motion.h3>
+        <motion.h3
+          {...fadeUp(0.15)}
+          className="text-4xl md:text-6xl font-light text-white mb-8 tracking-tight"
+        >
+          Bridging the{" "}
+          <em className="font-(family-name:--font-instrument) italic text-white/80">
+            Language Gap
+          </em>
+        </motion.h3>
 
-      <motion.p
-        {...fadeUp(0.3)}
-        className="text-xl text-gray-400 max-w-3xl mx-auto mb-16 leading-relaxed"
-      >
-        SnipShot demonstrates that a unified deep learning pipeline can{" "}
-        <span className="text-white font-semibold">
-          effectively translate
-        </span>{" "}
-        text embedded in digital comics—achieving 88.98% OCR accuracy, moderate-to-good BLEU translation scores, and strong user acceptance.
-      </motion.p>
+        <motion.p
+          {...fadeUp(0.3)}
+          className="text-lg text-white/50 max-w-3xl mx-auto mb-14 leading-relaxed font-light"
+        >
+          SnipShot demonstrates that a unified deep learning pipeline can{" "}
+          <span className="text-white/90 font-medium">
+            effectively translate
+          </span>{" "}
+          text embedded in digital comics achieving 88.98% OCR accuracy,
+          moderate-to-good BLEU translation scores, and strong user acceptance.
+        </motion.p>
 
-      <div className="grid md:grid-cols-3 gap-6 text-left">
-        {[
-          {
-            title: "Fine-tune OCR Models",
-            desc: "Train on artistic and stylized comic fonts to push accuracy beyond 88.98%.",
-            icon: Eye,
-          },
-          {
-            title: "Local LLM Translation",
-            desc: "Explore quantized on-device models for offline functionality and reduced latency.",
-            icon: Shield,
-          },
-          {
-            title: "Expand Language Support",
-            desc: "Add more in-demand languages to serve a broader global readership.",
-            icon: Globe,
-          },
-        ].map((item, i) => (
-          <motion.div
-            key={item.title}
-            {...fadeUp(0.4 + i * 0.1)}
-            className="bg-gray-900/50 border border-gray-800 p-6 rounded-2xl"
-          >
-            <item.icon className="w-8 h-8 text-cyan mb-3" />
-            <h4 className="text-lg font-bold text-white mb-2">{item.title}</h4>
-            <p className="text-sm text-gray-400">{item.desc}</p>
-          </motion.div>
-        ))}
+        <div className="grid md:grid-cols-3 gap-6 text-left">
+          {[
+            {
+              title: "Fine-tune OCR Models",
+              desc: "Train on artistic and stylized comic fonts to push accuracy beyond 88.98%.",
+              icon: Eye,
+            },
+            {
+              title: "Local LLM Translation",
+              desc: "Explore quantized on-device models for offline functionality and reduced latency.",
+              icon: Shield,
+            },
+            {
+              title: "Expand Language Support",
+              desc: "Add more in-demand languages to serve a broader global readership.",
+              icon: Globe,
+            },
+          ].map((item, i) => (
+            <motion.div key={item.title} {...fadeUp(0.4 + i * 0.1)}>
+              <GlassPanel className="p-6">
+                <CornerAccents />
+                <item.icon className="w-7 h-7 text-white/50 mb-3" />
+                <h4 className="text-base font-medium text-white mb-2">
+                  {item.title}
+                </h4>
+                <p className="text-xs text-white/40 font-light leading-relaxed">
+                  {item.desc}
+                </p>
+              </GlassPanel>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
