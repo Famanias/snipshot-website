@@ -119,10 +119,10 @@ export function TitleSlide() {
           {...fadeUp(0.3)}
           className="text-lg md:text-xl text-white/50 font-light leading-relaxed max-w-2xl mx-auto mb-10"
         >
-          A Deep Learningâ€“Based System for Translating{" "}
-          <em className="font-(family-name:--font-instrument) italic text-white/80">
+          A Deep Learning-Based System for Translating Text in Digital Comics{" "}
+          {/* <em className="font-(family-name:--font-instrument) italic text-white/80">
             Text in Digital Comics
-          </em>
+          </em> */}
         </motion.p>
 
         <motion.div {...fadeUp(0.45)}>
@@ -165,7 +165,7 @@ export function IntroSlide() {
               <p className="text-lg text-white/70 font-light leading-relaxed mb-6">
                 Digital comics attract{" "}
                 <span className="text-white font-medium">150 million</span>{" "}
-                monthly readers worldwide, yet translating embedded text remains
+                monthly readers worldwide (Webtoon, 2025), yet translating embedded text remains
                 a{" "}
                 <span className="text-rose-300 font-medium">
                   fragmented, multi-step process
@@ -506,7 +506,7 @@ export function SampleResultsSlide() {
       >
         <SectionLabel>Demonstration</SectionLabel>
         <h2 className="text-2xl font-light text-white mb-6 tracking-tight">
-          Sample{" "}
+          Actual{" "}
           <em className="font-(family-name:--font-instrument) italic text-white/70">
             Results
           </em>
@@ -689,10 +689,7 @@ export function ConclusionSlide() {
           {...fadeUp(0.15)}
           className="text-4xl md:text-6xl font-light text-white mb-8 tracking-tight"
         >
-          Bridging the{" "}
-          <em className="font-(family-name:--font-instrument) italic text-white/80">
-            Language Gap
-          </em>
+          Bridging the Language Gap
         </motion.h3>
 
         <motion.p
@@ -706,6 +703,15 @@ export function ConclusionSlide() {
           text embedded in digital comics achieving 88.98% OCR accuracy,
           moderate-to-good BLEU translation scores, and strong user acceptance.
         </motion.p>
+
+        <motion.h6
+          {...fadeUp(0.15)}
+          className="text-4xl md:text-4xl font-light text-white mb-8 tracking-tight"
+        >
+          <em className="font-(family-name:--font-instrument) italic text-white/80">
+            Recommendations for Future Research
+          </em>
+        </motion.h6>
 
         <div className="grid md:grid-cols-3 gap-6 text-left">
           {[
