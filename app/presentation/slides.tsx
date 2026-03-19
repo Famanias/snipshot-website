@@ -328,7 +328,6 @@ export function MethodsSlide() {
               <div className="space-y-3 text-sm text-white/50 font-light">
                 {[
                   "Technology Acceptance Model (TAM) framework",
-                  "20 beta testers for hands-on evaluation",
                   "BLEU-4 automated translation benchmarking",
                 ].map((text, i) => (
                   <div key={i} className="flex items-center gap-3">
@@ -457,6 +456,186 @@ export function ResultsSlide() {
 
 export function WorkflowSlide() {
   return <WorkflowAnimation />;
+}
+
+
+export function DetailedResultsSlide() {
+  const [tab, setTab] = useState<"ocr" | "bleu" | "scale">("ocr");
+
+  const tabs = [
+    { id: "ocr" as const,   label: "OCR Performance" },
+    { id: "bleu" as const,  label: "BLEU Quality" },
+    { id: "scale" as const, label: "Scalability" },
+  ];
+
+  return (
+    <div className="flex flex-col h-full justify-center px-8">
+      <div className="max-w-275 mx-auto w-full">
+        <SectionLabel>Results — Detail</SectionLabel>
+        <motion.h2
+          {...fadeUp(0)}
+          className="text-4xl md:text-5xl font-light text-white mb-8 tracking-tight"
+        >
+          Metrics{" "}
+          <em className="font-(family-name:--font-instrument) italic text-white/70">
+            Deep Dive
+          </em>
+        </motion.h2>
+
+        {/* Tab bar */}
+        <motion.div {...fadeUp(0.1)} className="flex gap-2 mb-8">
+          {tabs.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`px-5 py-2 rounded-sm border text-sm transition-all duration-200 ${
+                tab === t.id
+                  ? "bg-white/15 border-white/30 text-white font-medium"
+                  : "bg-white/5 border-white/10 text-white/40 hover:text-white/70 hover:bg-white/8"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </motion.div>
+
+        <AnimatePresence mode="wait">
+          {tab === "ocr" && (
+            <motion.div
+              key="ocr"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+            >
+              <GlassPanel>
+                <CornerAccents />
+                <p className="text-xs text-white/30 font-light mb-6">
+                  OCR performance evaluated against human-verified ground truth transcriptions.
+                </p>
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-white/10">
+                      {["Metric", "Value", "Interpretation"].map((h) => (
+                        <th key={h} className="text-left text-[10px] uppercase tracking-widest text-white/30 font-light pb-3 pr-6">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/6">
+                    {[
+                      { metric: "Mean OCR Accuracy",      value: "88.98%", interp: "Ideal",                  color: "text-emerald-300" },
+                      { metric: "Character Error Rate",   value: "1.02%",  interp: "Very low character errors", color: "text-sky-300" },
+                      { metric: "Mean OCR Confidence",    value: "85.92%", interp: "High model confidence",    color: "text-violet-300" },
+                    ].map((row) => (
+                      <tr key={row.metric}>
+                        <td className="py-3 pr-6 text-white/70 font-light">{row.metric}</td>
+                        <td className={`py-3 pr-6 font-medium ${row.color}`}>{row.value}</td>
+                        <td className="py-3 text-white/35 font-light text-xs">{row.interp}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="text-[11px] text-white/30 font-light mt-6 leading-relaxed">
+                  High accuracy and low CER confirm OCR is a reliable foundation for downstream translation. Minor recognition errors may still propagate, highlighting the need for continued refinement.
+                </p>
+              </GlassPanel>
+            </motion.div>
+          )}
+
+          {tab === "bleu" && (
+            <motion.div
+              key="bleu"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+            >
+              <GlassPanel>
+                <CornerAccents />
+                <p className="text-xs text-white/30 font-light mb-6">
+                  BLEU-4 scores across 12 samples grouped by source text character length.
+                </p>
+                <table className="w-full text-sm mb-6">
+                  <thead>
+                    <tr className="border-b border-white/10">
+                      {["Character Range", "Samples", "Mean BLEU", "Interpretation"].map((h) => (
+                        <th key={h} className="text-left text-[10px] uppercase tracking-widest text-white/30 font-light pb-3 pr-6">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/6">
+                    {[
+                      { range: "1–10 chars",   samples: 5,  bleu: "0.4106", interp: "Low",      color: "text-rose-300",    bar: 41 },
+                      { range: "11–20 chars",  samples: 4,  bleu: "0.7088", interp: "Good",     color: "text-emerald-300", bar: 71 },
+                      { range: "21+ chars",    samples: 3,  bleu: "0.7223", interp: "Good",     color: "text-emerald-300", bar: 72 },
+                      { range: "Total",        samples: 12, bleu: "0.6139", interp: "Moderate", color: "text-amber-300",   bar: 61 },
+                    ].map((row) => (
+                      <tr key={row.range}>
+                        <td className="py-3 pr-6 text-white/70 font-light">{row.range}</td>
+                        <td className="py-3 pr-6 text-white/40 font-mono text-xs">{row.samples}</td>
+                        <td className={`py-3 pr-6 font-medium ${row.color}`}>{row.bleu}</td>
+                        <td className="py-3 text-white/35 font-light text-xs">{row.interp}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="text-[11px] text-white/30 font-light leading-relaxed">
+                  Strongest scores on 11+ character segments. Short fragments (SFX, exclamations, single words) score lower due to limited n-gram overlap — not a failure of translation quality per se.
+                </p>
+              </GlassPanel>
+            </motion.div>
+          )}
+
+          {tab === "scale" && (
+            <motion.div
+              key="scale"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+            >
+              <GlassPanel>
+                <CornerAccents />
+                <p className="text-xs text-white/30 font-light mb-6">
+                  Pipeline tested across 6 image resolutions to assess scalability.
+                </p>
+                <table className="w-full text-sm mb-6">
+                  <thead>
+                    <tr className="border-b border-white/10">
+                      {["Resolution", "Megapixels", "Detection (ms)", "OCR (ms)", "Total (ms)"].map((h) => (
+                        <th key={h} className="text-left text-[10px] uppercase tracking-widest text-white/30 font-light pb-3 pr-4">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/6">
+                    {[
+                      { res: "640×480",   mp: "0.31", det: "2,504", ocr: "1,477", total: "1,027" },
+                      { res: "800×600",   mp: "0.48", det: "560",   ocr: "291",   total: "269" },
+                      { res: "1024×768",  mp: "0.79", det: "650",   ocr: "353",   total: "297" },
+                      { res: "1280×720",  mp: "0.92", det: "474",   ocr: "288",   total: "186" },
+                      { res: "1920×1080", mp: "2.07", det: "401",   ocr: "303",   total: "98" },
+                      { res: "2560×1440", mp: "3.69", det: "506",   ocr: "418",   total: "88" },
+                    ].map((row) => (
+                      <tr key={row.res}>
+                        <td className="py-2.5 pr-4 text-white/70 font-mono text-xs">{row.res}</td>
+                        <td className="py-2.5 pr-4 text-white/40 font-mono text-xs">{row.mp}</td>
+                        <td className="py-2.5 pr-4 text-white/60 font-mono text-xs">{row.det}</td>
+                        <td className="py-2.5 pr-4 text-white/60 font-mono text-xs">{row.ocr}</td>
+                        <td className="py-2.5 text-sky-300 font-mono text-xs font-medium">{row.total}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="text-[11px] text-white/30 font-light leading-relaxed">
+                  Sub-linear scaling: total time decreases as resolution grows. Fixed model initialization overhead dominates at low resolutions — clearer text in higher-res images improves per-pixel efficiency.
+                </p>
+              </GlassPanel>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
 }
 
 
@@ -630,8 +809,9 @@ export function DiscussionSlide() {
                 words score lowest, due to limited n-gram overlap. Longer
                 segments achieve{" "}
                 <span className="text-emerald-300/90 font-medium">
-                  0.72 BLEU
+                  0.72 BLEU.{" "}
                 </span>
+                While overall BLEU is moderate (0.6139).
                 .
               </p>
             </GlassPanel>
@@ -640,16 +820,41 @@ export function DiscussionSlide() {
           <motion.div {...scaleUp(0.4)}>
             <GlassPanel className="relative overflow-hidden">
               <CornerAccents />
-              <div className="text-5xl font-light text-amber-300/90 mb-4">
-                1.8s
+              <div className="flex items-end gap-3 mb-4">
+                <div className="text-5xl font-light text-amber-300/90">~5s</div>
+                <span className="text-xs text-white/30 font-light mb-2 leading-tight">
+                  mean total<br />processing time
+                </span>
               </div>
               <h4 className="text-xl font-medium text-white mb-4">
-                Rendering Bottleneck
+                Pipeline Stage Breakdown
               </h4>
-              <p className="text-sm text-white/50 font-light leading-relaxed">
-                Rendering is the slowest stage (mean 1,805 ms) with high
-                variability due to image complexity and text reconstruction
-                demands.
+              <div className="space-y-2.5">
+                {[
+                  { stage: "Rendering",    mean: 1805, max: 1805, color: "bg-amber-300/70" },
+                  { stage: "Translation",  mean: 1200, max: 1805, color: "bg-sky-300/70" },
+                  { stage: "Inpainting",   mean: 703,  max: 1805, color: "bg-violet-300/70" },
+                  { stage: "Detection",    mean: 691,  max: 1805, color: "bg-emerald-300/70" },
+                  { stage: "OCR",          mean: 580,  max: 1805, color: "bg-rose-300/70" },
+                ].map((s) => (
+                  <div key={s.stage} className="space-y-1">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-white/60 font-light">{s.stage}</span>
+                      <span className="text-white/40 font-mono">{s.mean.toLocaleString()} ms</span>
+                    </div>
+                    <div className="h-1 bg-white/6 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${(s.mean / s.max) * 100}%` }}
+                        transition={{ duration: 0.9, delay: 0.6, ease: "easeOut" }}
+                        className={`h-full rounded-full ${s.color}`}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[11px] text-white/30 font-light mt-4 leading-relaxed">
+                n = 9 test runs · Rendering has highest standard deviation (σ = 988 ms) due to image complexity.
               </p>
             </GlassPanel>
           </motion.div>
