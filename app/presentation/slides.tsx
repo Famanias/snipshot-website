@@ -278,7 +278,7 @@ export function MethodsSlide() {
                   },
                   { step: "02", label: "OCR", tech: "RoFormer + XPOS" },
                   { step: "03", label: "Translation", tech: "Llama-3-70b" },
-                  { step: "04", label: "Inpainting", tech: "LaMa" },
+                  { step: "04", label: "Inpainting", tech: "LaMa: Large Mask Inpainting" },
                   {
                     step: "05",
                     label: "Rendering",
