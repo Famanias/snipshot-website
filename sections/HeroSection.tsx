@@ -222,7 +222,7 @@ export default function HeroSection() {
       <div className="relative mx-auto flex min-h-screen max-w-5xl items-center px-6 pt-32 pb-24 lg:pt-40 lg:pb-32">
         <div className="w-full text-center">
           <motion.h1
-            className="heading mx-auto max-w-5xl text-5xl leading-[1.05] text-white sm:text-6xl lg:text-7xl"
+            className="heading mx-auto max-w-5xl text-3xl leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl"
             variants={staggerContainer(0.12)}
             initial="hidden"
             animate="visible"
@@ -243,7 +243,7 @@ export default function HeroSection() {
           </motion.h1>
 
           <motion.p
-            className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-gray-400"
+            className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-gray-400 sm:text-base lg:text-lg"
             variants={fadeInUp}
             initial="hidden"
             animate="visible"
