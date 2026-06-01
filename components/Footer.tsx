@@ -8,7 +8,6 @@ const productLinks = [
   { label: "Features", href: "#features" },
   { label: "Why SnipShot", href: "#advantage" },
   { label: "Results", href: "#metrics" },
-  { label: "Download", href: "#cta" },
 ];
 
 const projectLinks = [

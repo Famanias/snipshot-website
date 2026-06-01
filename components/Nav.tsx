@@ -73,7 +73,7 @@ export default function Nav() {
         {/* CTA + mobile toggle */}
         <div className="flex items-center gap-4">
           <motion.a
-            href="#cta"
+            href="https://github.com/Famanias/snipshot-desktop/releases"
             className="hidden md:inline-flex items-center gap-2 clip-corner bg-cyan px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-black hover:bg-cyan-dark transition-colors"
             whileHover={buttonHover}
             whileTap={buttonTap}

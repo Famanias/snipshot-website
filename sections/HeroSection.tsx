@@ -262,7 +262,7 @@ export default function HeroSection() {
             transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
           >
             <motion.a
-              href="#cta"
+              href="https://github.com/Famanias/snipshot-desktop/releases"
               className="inline-flex items-center gap-2.5 clip-corner bg-cyan px-7 py-3.5 text-base font-bold uppercase tracking-wider text-black transition-colors hover:bg-cyan-dark"
               whileHover={buttonHover}
               whileTap={buttonTap}

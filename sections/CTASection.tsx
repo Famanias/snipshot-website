@@ -55,7 +55,7 @@ export default function CTASection() {
           viewport={{ once: true, margin: "-40px" }}
         >
           <motion.a
-            href="https://github.com/"
+            href="https://github.com/Famanias/snipshot-desktop/releases"
             target="_blank"
             rel="noopener noreferrer"
             className="clip-corner inline-flex items-center gap-2.5 bg-cyan px-7 py-3.5 text-base font-bold uppercase tracking-wider text-black hover:bg-cyan-dark transition-colors"
