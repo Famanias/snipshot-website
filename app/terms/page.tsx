@@ -72,9 +72,25 @@ export default function TermsPage() {
           </article>
         ))}
 
-        <div className="pt-2 text-sm text-gray-400">
-          <Link href="/privacy" className="text-cyan hover:text-cyan-dark">
-            Read Privacy Policy
+        <h2 className="text-2xl font-semibold text-white">Learn more</h2>
+        <div className="mt-6 flex flex-wrap gap-4">
+          <Link
+            href="/docs"
+            className="clip-corner border border-[#1A1A1A] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-gray-400"
+          >
+            Read Documentation
+          </Link>
+          <Link
+            href="/privacy"
+            className="clip-corner border border-[#1A1A1A] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-gray-400"
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            href="/terms"
+            className="clip-corner bg-cyan px-5 py-3 text-sm font-semibold text-black transition-colors hover:bg-cyan-dark"
+          >
+            Terms of Service
           </Link>
         </div>
       </section>

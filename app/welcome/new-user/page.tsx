@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 export default function WelcomeNewUserPage() {
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <main>
         <WelcomeClient />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

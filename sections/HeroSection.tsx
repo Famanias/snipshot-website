@@ -249,10 +249,9 @@ export default function HeroSection() {
             animate="visible"
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            Capture any manga panel, webtoon page, or raw scan - SnipShot&apos;s
-            7-stage AI pipeline detects text, recognises characters, and
-            translates to 26+ languages in under a second. No copy-paste, no
-            mobile hassle.
+            Capture any manga panel, webtoon page, or raw scan. SnipShot&apos;s
+            5-stage pipeline detects text, recognises characters, and
+            translates to seamlessly. No copy-paste, no mobile hassle.
           </motion.p>
 
           <motion.div

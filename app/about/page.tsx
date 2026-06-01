@@ -59,7 +59,7 @@ export default function AboutPage() {
         <div className="mt-6 flex flex-wrap gap-4">
           <Link
             href="/docs"
-            className="clip-corner bg-cyan px-5 py-3 text-sm font-semibold text-black transition-colors hover:bg-cyan-dark"
+            className="clip-corner border border-[#1A1A1A] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-gray-400"
           >
             Read Documentation
           </Link>

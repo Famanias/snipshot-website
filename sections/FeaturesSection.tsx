@@ -18,19 +18,19 @@ const features: Feature[] = [
     icon: Scissors,
     title: "Snip Anywhere",
     description:
-      "Select any screen region — manga pages, webtoons, light novel scans, or raw raws — and capture it instantly. Works across all apps and browsers.",
+      "Select any screen region — manga pages, webtoons, light novel scans, or raw raws — and capture it instantly.",
   },
   {
     icon: Scan,
     title: "Smart OCR",
     description:
-      "Our Roformer + ViT-powered OCR engine excels at vertical Japanese text, stylised manga fonts, speech bubbles, and complex panel layouts that trip up generic tools.",
+      "Our OCR engine excels at vertical Japanese text, stylised manga fonts, speech bubbles, and complex panel layouts that trip up generic tools.",
   },
   {
     icon: Languages,
     title: "Instant Translation",
     description:
-      "Translate extracted text to 26+ languages in under a second — Japanese, Korean, Chinese, Arabic, and more — powered by Groq LLM with full context awareness.",
+      "Translate extracted text seamlessly - powered with our AI-powered translator full context awareness.",
   },
 ];
 

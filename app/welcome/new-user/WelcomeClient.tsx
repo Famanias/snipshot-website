@@ -68,14 +68,13 @@ export default function WelcomeClient() {
           variants={fadeInUp}
           className="text-gray-400 text-base md:text-lg mb-10 leading-relaxed"
         >
-          Your email has been confirmed. You&apos;re all set to start snipping,
-          OCR-ing, and translating manga like a pro.
+          Your email has been confirmed. You&apos;re all set to using SnipShot!
         </motion.p>
 
         {/* CTAs */}
         <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 w-full justify-center">
           <motion.a
-            href="/#cta"
+            href="https://github.com/Famanias/snipshot-desktop/releases"
             className="inline-flex items-center justify-center gap-2 clip-corner bg-cyan px-6 py-3 text-sm font-bold uppercase tracking-wider text-black hover:bg-cyan-dark transition-colors"
             whileHover={buttonHover}
             whileTap={buttonTap}

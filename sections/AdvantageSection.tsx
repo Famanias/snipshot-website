@@ -14,8 +14,7 @@ import {
 const bullets = [
   "Sub-second snip → translate → read workflow",
   "Handles complex layouts: vertical text, SFX, speech bubbles",
-  "7-stage AI pipeline: detect → OCR → translate → inpaint → render",
-  "Survey-backed: 5/5 usefulness from 79+ manga fans",
+  "5-stage AI pipeline: detect → OCR → translate → inpaint → render",
 ];
 
 const screenshots = [
@@ -60,10 +59,8 @@ export default function AdvantageSection() {
               </h2>
 
               <p className="mt-6 text-gray-400 text-lg leading-relaxed max-w-lg">
-                SnipShot runs seamlessly in the cloud — accessible from any
-                device with a full-size display. No local hardware requirements,
-                no subscription walls. Just fast, accurate translation built for
-                long reading sessions.
+                SnipShot runs both locally and online, accessible from any
+                device with a full-size display.
               </p>
             </RevealSection>
 
@@ -133,11 +130,10 @@ export default function AdvantageSection() {
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`h-2.5 w-2.5 rounded-full transition ${
-                      currentIndex === index
-                        ? "bg-white"
-                        : "bg-white/40 hover:bg-white/70"
-                    }`}
+                    className={`h-2.5 w-2.5 rounded-full transition ${currentIndex === index
+                      ? "bg-white"
+                      : "bg-white/40 hover:bg-white/70"
+                      }`}
                   />
                 ))}
               </div>

@@ -34,16 +34,14 @@ export default function CTASection() {
       >
         <RevealSection>
           <h2 className="heading text-3xl sm:text-4xl lg:text-5xl text-white">
-            Ready to Read
-            <br />
-            Without Limits?
+            Ready to Snip?
           </h2>
         </RevealSection>
 
         <RevealSection>
           <p className="mt-6 text-gray-400 text-lg leading-relaxed max-w-xl mx-auto">
             Download SnipShot and start reading raw manga, manhwa, and manhua in
-            your language — for free. No account required.
+            your language for free.
           </p>
         </RevealSection>
 
@@ -66,13 +64,13 @@ export default function CTASection() {
             <ArrowRight className="h-5 w-5" />
           </motion.a>
           <motion.a
-            href="#contact"
+            href="mailto:hello.snipshot@gmail.com?subject=Feedback%20on%20SnipShot"
             className="clip-corner inline-flex items-center gap-2.5 border border-white/30 px-7 py-3.5 text-base font-bold uppercase tracking-wider text-white hover:bg-white/10 transition-colors"
             whileHover={buttonHover}
             whileTap={buttonTap}
           >
             <Mail className="h-5 w-5" />
-            Give Feedback
+            Email Us
           </motion.a>
         </motion.div>
       </motion.div>

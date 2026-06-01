@@ -73,7 +73,31 @@ export default function DocsPage() {
             <li>Layout artifacts: use the re-render option once more.</li>
           </ul>
         </article>
+        <div className="col-span-2">
+          <h2 className="text-2xl font-semibold text-white">Learn more</h2>
+          <div className="mt-6 flex flex-wrap gap-4">
+            <Link
+              href="/docs"
+              className="clip-corner bg-cyan px-5 py-3 text-sm font-semibold text-black transition-colors hover:bg-cyan-dark"
+            >
+              Read Documentation
+            </Link>
+            <Link
+              href="/privacy"
+              className="clip-corner border border-[#1A1A1A] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-gray-400"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="clip-corner border border-[#1A1A1A] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-gray-400"
+            >
+              Terms of Service
+            </Link>
+          </div>
+        </div>
       </section>
+
     </main>
   );
 }

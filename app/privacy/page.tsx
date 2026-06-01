@@ -68,9 +68,25 @@ export default function PrivacyPage() {
           </article>
         ))}
 
-        <div className="pt-2 text-sm text-gray-400">
-          <Link href="/terms" className="text-cyan hover:text-cyan-dark">
-            Read Terms of Service
+        <h2 className="text-2xl font-semibold text-white">Learn more</h2>
+        <div className="mt-6 flex flex-wrap gap-4">
+          <Link
+            href="/docs"
+            className="clip-corner border border-[#1A1A1A] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-gray-400"
+          >
+            Read Documentation
+          </Link>
+          <Link
+            href="/privacy"
+            className="clip-corner bg-cyan px-5 py-3 text-sm font-semibold text-black transition-colors hover:bg-cyan-dark"
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            href="/terms"
+            className="clip-corner border border-[#1A1A1A] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-gray-400"
+          >
+            Terms of Service
           </Link>
         </div>
       </section>
