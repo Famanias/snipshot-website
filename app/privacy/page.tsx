@@ -1,29 +1,88 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | SnipShot",
+  description:
+    "Learn how SnipShot collects, uses, and protects your information, including your email and uploaded images.",
+};
 
 const sections = [
   {
     title: "1. Overview",
-    body: "SnipShot values your privacy. This policy explains how we collect, use, and protect information when you use our cloud-hosted translation service.",
+    body: (
+      <>
+        SnipShot values your privacy. This policy explains how we collect, use,
+        and protect information when you use our cloud-hosted translation service.
+      </>
+    ),
   },
   {
     title: "2. Information we collect",
-    body: "We may collect account details (email and authentication data), usage metrics, and technical diagnostics needed to operate and improve the product.",
+    body: (
+      <>
+        We only collect your email address for account creation and
+        authentication, and images that you upload to be stored in our database
+        for processing and translation.
+      </>
+    ),
   },
   {
     title: "3. How we use data",
-    body: "Your information is used to provide core features, improve OCR and translation quality, maintain security, and troubleshoot service reliability.",
+    body: (
+      <>
+        Your email is used to manage your account and authenticate access, while
+        your uploaded images are stored securely in our database to provide
+        our image translation services.
+      </>
+    ),
   },
   {
-    title: "4. Data retention",
-    body: "We retain data only as long as necessary for account operation, legal obligations, and service quality. You can request deletion of your account data.",
+    title: "4. Data retention & control",
+    body: (
+      <>
+        You have full control over your content. You can delete your uploaded
+        images at any time directly within the app itself. If you wish to delete
+        your entire account, you can request account deletion by emailing us at{" "}
+        <a
+          href="mailto:hello.snipshot@gmail.com"
+          className="text-cyan hover:underline"
+        >
+          hello.snipshot@gmail.com
+        </a>{" "}
+        or by visiting our{" "}
+        <Link href="/account-deletion" className="text-cyan hover:underline">
+          account deletion page
+        </Link>{" "}
+        for more details.
+      </>
+    ),
   },
   {
     title: "5. Security",
-    body: "We use industry-standard safeguards for data in transit and at rest. No online platform is perfectly secure, but we continuously improve our defenses.",
+    body: (
+      <>
+        We use industry-standard safeguards for data in transit and at rest. No
+        online platform is perfectly secure, but we continuously improve our
+        defenses.
+      </>
+    ),
   },
   {
     title: "6. Contact",
-    body: "If you have questions about this policy, contact us through our support channels. Continued use of SnipShot means you accept this privacy policy.",
+    body: (
+      <>
+        If you have questions about this policy or wish to request data/account
+        deletion, contact us at{" "}
+        <a
+          href="mailto:hello.snipshot@gmail.com"
+          className="text-cyan hover:underline"
+        >
+          hello.snipshot@gmail.com
+        </a>
+        . Continued use of SnipShot means you accept this privacy policy.
+      </>
+    ),
   },
 ];
 
@@ -54,7 +113,7 @@ export default function PrivacyPage() {
         <h1 className="mt-4 heading text-4xl text-white sm:text-5xl">
           Privacy Policy
         </h1>
-        <p className="mt-3 text-sm text-gray-400">Last updated: March 14, 2026</p>
+        <p className="mt-3 text-sm text-gray-400">Last updated: June 7, 2026</p>
       </section>
 
       <section className="mx-auto w-full max-w-5xl space-y-5 px-6 pb-20">
@@ -64,7 +123,7 @@ export default function PrivacyPage() {
             className="rounded-lg border border-[#1A1A1A] bg-[#050505] p-6"
           >
             <h2 className="text-lg font-semibold text-white">{section.title}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-gray-300">{section.body}</p>
+            <div className="mt-3 text-sm leading-relaxed text-gray-300">{section.body}</div>
           </article>
         ))}
 
