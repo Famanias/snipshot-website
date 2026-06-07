@@ -12,10 +12,8 @@ interface Metric {
 }
 
 const metrics: Metric[] = [
-  { numericValue: 5, suffix: "/5", label: "Usefulness Score" },
-  { numericValue: 79, suffix: "+", label: "Manga Fans Surveyed" },
-  { numericValue: 26, suffix: "+", label: "Languages Supported" },
-  { numericValue: 1, prefix: "~", suffix: "s", label: "Avg. Process Speed" },
+  { numericValue: 100, suffix: "%", label: "Free" },
+  { numericValue: 100, suffix: "%", label: "Open Source" }
 ];
 
 export default function MetricsSection() {
@@ -23,14 +21,14 @@ export default function MetricsSection() {
     <section id="metrics" className="bg-cyan py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-6">
         <motion.div
-          className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 text-center"
+          className="flex flex-wrap justify-center gap-8 lg:gap-16 text-center"
           variants={staggerContainer(0.15)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-40px" }}
         >
           {metrics.map((m) => (
-            <motion.div key={m.label} variants={popIn}>
+            <motion.div key={m.label} variants={popIn} className="w-36 sm:w-44">
               <AnimatedNumber
                 value={m.numericValue}
                 prefix={m.prefix}

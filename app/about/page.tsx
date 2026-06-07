@@ -25,7 +25,7 @@ export default function AboutPage() {
           About
         </p>
         <h1 className="mt-4 heading text-4xl text-white sm:text-5xl">
-          Built For Better Manga Reading
+          Built For Better Comic Reading
         </h1>
         <p className="mt-6 max-w-3xl text-base leading-relaxed text-gray-300 sm:text-lg">
           SnipShot helps manga and comic readers instantly translate hard-to-read
