@@ -19,6 +19,7 @@ const projectLinks = [
 const legal = [
   { label: "Terms of Service", href: "/terms" },
   { label: "Privacy Policy", href: "/privacy" },
+  { label: "Account Deletion", href: "/account-deletion" },
 ];
 
 // const socials = [
