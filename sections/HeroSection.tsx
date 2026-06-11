@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import HeroAd from "@/components/HeroAd";
 import {
   heroWord,
   staggerContainer,
@@ -221,6 +222,7 @@ export default function HeroSection() {
 
       <div className="relative mx-auto flex min-h-screen max-w-5xl items-center px-6 pt-32 pb-24 lg:pt-40 lg:pb-32">
         <div className="w-full text-center">
+          <HeroAd />
           <motion.h1
             className="heading mx-auto max-w-5xl text-3xl leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl"
             variants={staggerContainer(0.12)}
@@ -270,6 +272,7 @@ export default function HeroSection() {
               <ArrowRight className="h-5 w-5" />
             </motion.a>
           </motion.div>
+
         </div>
       </div>
     </section>

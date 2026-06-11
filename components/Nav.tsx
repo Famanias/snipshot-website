@@ -6,10 +6,11 @@ import { Scissors, ArrowRight, Menu, X } from "lucide-react";
 import { buttonHover, buttonTap } from "./motion/variants";
 
 const links = [
-  { label: "Features", href: "#features" },
-  { label: "Why Desktop", href: "#advantage" },
-  { label: "Results", href: "#metrics" },
-  { label: "Contact", href: "#contact" },
+  { label: "Features", href: "/#features" },
+  { label: "Why Desktop", href: "/#advantage" },
+  { label: "Results", href: "/#metrics" },
+  { label: "Contact", href: "/#contact" },
+  { label: "Advertise", href: "/advertise" },
 ];
 
 export default function Nav() {
@@ -39,7 +40,7 @@ export default function Nav() {
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <motion.a
-          href="#"
+          href="/"
           className="flex items-center gap-2 group"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
