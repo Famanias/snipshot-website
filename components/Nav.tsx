@@ -9,6 +9,7 @@ const links = [
   { label: "Features", href: "/#features" },
   { label: "Why Desktop", href: "/#advantage" },
   { label: "Results", href: "/#metrics" },
+  { label: "Pricing", href: "/subscriptions" },
   { label: "Contact", href: "/#contact" },
   { label: "Advertise", href: "/advertise" },
 ];
