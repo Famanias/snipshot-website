@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Scissors, Key, CheckCircle, AlertCircle, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Key, CheckCircle, AlertCircle, Eye, EyeOff, Loader2 } from "lucide-react";
 import { fadeInUp, staggerContainer, scaleIn, buttonHover, buttonTap } from "@/components/motion/variants";
 
 function parseEmailAndTokenFromHash(): { email: string | null; token: string | null } {
@@ -116,7 +116,7 @@ export default function ResetPasswordPage() {
           transition={{ duration: 0.4 }}
         >
           <motion.div variants={scaleIn} className="flex items-center gap-2 mb-8">
-            <Scissors className="h-6 w-6 text-cyan" />
+            <img src="/icon.svg" alt="SnipShot Logo" className="h-6 w-6" />
             <span className="text-lg font-bold uppercase tracking-tight text-white">SnipShot</span>
           </motion.div>
 
@@ -155,7 +155,7 @@ export default function ResetPasswordPage() {
       >
         {/* Logo */}
         <div className="flex items-center gap-2 mb-8">
-          <Scissors className="h-6 w-6 text-cyan" />
+          <img src="/icon.svg" alt="SnipShot Logo" className="h-6 w-6" />
           <span className="text-lg font-bold uppercase tracking-tight text-white">SnipShot</span>
         </div>
 
