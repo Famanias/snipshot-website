@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, ArrowRight, Download } from "lucide-react";
+import { Scissors, CheckCircle, ArrowRight, Download } from "lucide-react";
 import { fadeInUp, staggerContainer, scaleIn, buttonHover, buttonTap } from "@/components/motion/variants";
 
 function parseEmailFromHash(): string | null {
@@ -41,7 +41,7 @@ export default function WelcomeClient() {
       >
         {/* Logo */}
         <motion.div variants={scaleIn} className="flex items-center gap-2 mb-10">
-          <img src="/icon.svg" alt="SnipShot Logo" className="h-7 w-7" />
+          <Scissors className="h-7 w-7 text-cyan" />
           <span className="text-xl font-bold uppercase tracking-tight text-white">SnipShot</span>
         </motion.div>
 

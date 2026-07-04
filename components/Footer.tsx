@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeInUp, staggerContainer } from "./motion/variants";
+import { Scissors } from "lucide-react";
+import { staggerContainer, fadeInUp } from "./motion/variants";
 
 const productLinks = [
   { label: "Features", href: "#features" },
@@ -41,7 +42,7 @@ export default function Footer() {
           {/* Col 1 — Brand */}
           <motion.div variants={fadeInUp}>
             <a href="#" className="flex items-center gap-2">
-              <img src="/icon.svg" alt="SnipShot Logo" className="h-6 w-6" />
+              <Scissors className="h-6 w-6 text-cyan" />
               <span className="text-lg font-bold uppercase tracking-tight text-white">
                 SnipShot
               </span>

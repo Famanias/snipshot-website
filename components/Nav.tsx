@@ -2,16 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Scissors, ArrowRight, Menu, X } from "lucide-react";
 import { buttonHover, buttonTap } from "./motion/variants";
 
 const links = [
-  { label: "Features", href: "/#features" },
-  { label: "Why Desktop", href: "/#advantage" },
-  { label: "Results", href: "/#metrics" },
-  { label: "Pricing", href: "/subscriptions" },
-  { label: "Contact", href: "/#contact" },
-  { label: "Advertise", href: "/advertise" },
+  { label: "Features", href: "#features" },
+  { label: "Why Desktop", href: "#advantage" },
+  { label: "Results", href: "#metrics" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export default function Nav() {
@@ -41,12 +39,12 @@ export default function Nav() {
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <motion.a
-          href="/"
+          href="#"
           className="flex items-center gap-2 group"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
         >
-          <img src="/icon.svg" alt="SnipShot Logo" className="h-6 w-6" />
+          <Scissors className="h-6 w-6 text-cyan" />
           <span className="text-lg font-bold uppercase tracking-tight text-white">
             SnipShot
           </span>
